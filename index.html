@@ -3,21 +3,31 @@
 <html>
     <head>
         <title>RPN Calculator</title>
+        <link rel="stylesheet" href="style.css">
     </head>
 
     <body>
-        <div>
-            <h2>RPN Calculator</h2>
+        <div id="content">
+            <div>
+                <h2>RPN Calculator</h2>
+            </div>
+            <div id="input">
+                <div>
+                    <input id="inputExpression" type="text" placeholder="Input the expression">
+                    <br><button onclick="handlers.calculateExp()">Calculate</button>
+                </div>
+                <div>
+                    <h4>OR</h4>
+                </div>
+                <div>
+                    <input type="file" id="inputFile" accept=".txt">
+                    <br><button onclick="handlers.calculateFile()">Calculate</button>
+                </div>
+            </div>
+            <div class="info">
+
+            </div>
         </div>
-        <div>
-            <input id="inputExpression" type="text">
-            <button onclick="handlers.calculateExp()">Calculate</button>
-        </div>
-        <div>
-            <br><br><input type="file" id="inputFile" accept=".txt">
-            <button onclick="handlers.calculateFile()">Calculate</button>
-        </div>
-        <script type="text/Javascript" src="Stack.js"></script>
         <script type="text/Javascript" src="calc.js"></script>
     </body>
 </html>
