@@ -4,10 +4,11 @@ var rpn = {
   undefinedOps: false,
   
   calculate: function() {
+    debugger;
     this.data = [];
     this.exp.split(' ').forEach((element) => {
       if (!isNaN(element)) {
-        this.data.push(parseInt(element));
+        this.data.push(parseFloat(element));
       }
       else if (/^[+*/-]$/g.test(element)) {
         var item1 = this.data.pop();
@@ -37,6 +38,7 @@ var rpn = {
     });
   }
 };
+
 
 var handlers = {
   calculateExp: function() {
@@ -80,27 +82,55 @@ var handlers = {
   }
 };
 
+
 var view = {
+  inputDiv: '',
+  inputView: '',
+
   display: function(error=false) {
+    this.inputDiv = document.getElementById("input");
+    this.inputView = this.inputDiv.cloneNode(true);
+    this.inputDiv.innerHTML = "";
     if (!error) {
-      console.log(rpn.exp);
       var answer = rpn.data[0];
-      if (!(answer === undefined)) {
+      if (!(answer === undefined || rpn.exp === '')) {
         if (rpn.undefinedOps) {
-          console.log('Undefined operators present in expression ignored.')
+          this.inputDiv.appendChild(this.createLineElement("Undefined operators present in expression ignored."));
         }
         if (rpn.data.length > 1) {
-          console.log("More than one value left in the stack. Not a valid expression.");
+          this.inputDiv.appendChild(this.createLineElement("More than one value left in the stack. Not a valid expression."));
           return;
         }
-        console.log("Answer =", answer);
+        this.inputDiv.appendChild(this.createLineElement("Answer", answer));
       }
       else {
-        console.log("Invalid Expression");
+        this.inputDiv.appendChild(this.createLineElement("Invalid Expression"));
       }
     }
     else {
-      console.log(error);
+      this.inputDiv.appendChild(this.createLineElement(error));
     }    
+  },
+
+  createLineElement: function(message, answer=false) {
+    var divElement = document.createElement('div');
+    var lineHeadElement = document.createElement('h4');
+    var buttonElement = document.createElement('button');
+    if (answer) {
+      lineHeadElement.textContent = message + " = " + answer;
+    }
+    else {
+      lineHeadElement.textContent = message;
+    }
+    buttonElement.textContent = "Calculate another expression.";
+    buttonElement.id = "resetButton";  
+    buttonElement.onclick = () => view.resetView();  
+    divElement.appendChild(lineHeadElement);
+    divElement.appendChild(buttonElement);
+    return divElement;
+  },
+
+  resetView: function() {
+    this.inputDiv.replaceWith(this.inputView);
   }
 };
