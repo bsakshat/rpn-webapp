@@ -4,7 +4,6 @@ var rpn = {
   undefinedOps: false,
   
   calculate: function() {
-    debugger;
     this.data = [];
     this.exp.split(' ').forEach((element) => {
       if (!isNaN(element)) {
@@ -87,7 +86,6 @@ var view = {
   inputView: '',
 
   display: function(error=false) {
-    debugger;
     this.inputDiv = document.getElementById("input");
     this.inputView = this.inputDiv.cloneNode(true);
     this.inputDiv.innerHTML = "";
