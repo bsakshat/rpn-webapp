@@ -43,7 +43,7 @@ var rpn = {
 var handlers = {
   calculateExp: function() {
     let inputExp = document.getElementById("inputExpression");
-    rpn.exp = inputExp.value;
+    rpn.exp = inputExp.value.trim();
     inputExp.value = "";
     rpn.calculate();
     view.display();
@@ -59,7 +59,6 @@ var handlers = {
   },
 
   getFileContent: function() {
-    debugger;
     return new Promise((resolve, reject) => {
       var inputFileElement = document.getElementById("inputFile");
       const reader = new FileReader();
@@ -67,7 +66,7 @@ var handlers = {
       reader.onload = (event) => {
         if (inputFile.type === "text/plain") {
           const res = event.target.result;
-          rpn.exp = res;
+          rpn.exp = res.trim();
           resolve();
         }
         else {
@@ -88,6 +87,7 @@ var view = {
   inputView: '',
 
   display: function(error=false) {
+    debugger;
     this.inputDiv = document.getElementById("input");
     this.inputView = this.inputDiv.cloneNode(true);
     this.inputDiv.innerHTML = "";
@@ -95,7 +95,7 @@ var view = {
       var answer = rpn.data[0];
       if (!(answer === undefined || rpn.exp === '')) {
         if (rpn.undefinedOps) {
-          this.inputDiv.appendChild(this.createLineElement("Undefined operators present in expression ignored."));
+          this.inputDiv.innerHTML += "Undefined operators present in expression ignored.";
         }
         if (rpn.data.length > 1) {
           this.inputDiv.appendChild(this.createLineElement("More than one value left in the stack. Not a valid expression."));
