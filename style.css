@@ -7,8 +7,13 @@ button {
   margin-top: 10px;
 }
 #input {
-  padding-top: 5%;
+  margin-top: 5%;
+}
+#inputExpression {
+  width: 30%;
+  text-align: center;
 }
 #inputFile {
-  padding-left: 25px;
+  margin-bottom: 10px;
+  padding-left: 50px;
 }
